@@ -43,6 +43,7 @@ def use_subunits(f):
     return wrapper
 
 
+@functools.total_ordering
 class Unit(object):
 
     def __init__(self, coeff, subunit=None, **kwargs):
@@ -207,11 +208,15 @@ class Unit(object):
     __rtruediv__ = __rdiv__
 
     @sameunits
-    def __cmp__(self, t):
-        return self.coeff - t.coeff
+    def __lt__(self, t):
+        return self.coeff < t.coeff
+
+    @sameunits
+    def __eq__(self, t):
+        return self.coeff == t.coeff
 
     def __hash__(self):
-        return self.coeff.__hash__() ^ self.units.__hash__()
+        return hash(self.coeff) ^ hash(self.units)
 
 # units
 GeV = Unit(1, GeV=1)
