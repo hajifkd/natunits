@@ -8,3 +8,4 @@ R_EARTH = 6356.752314 * km
 
 T0 = 2.72548 * kelvin
 
+H0 = 69.32 * km / s / Mpc

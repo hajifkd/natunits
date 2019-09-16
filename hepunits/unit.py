@@ -254,6 +254,12 @@ Mp = (8 * pi * G).in_(GeV).inverse()**Fraction(1, 2)
 # barn
 b = Unit(1e-28, subunit='b', m=2)
 
+# parsec
+pc = Unit(3.085677581 * 10**16, subunit="pc", m=1)
+kpc = Unit(3.085677581 * 10**16 * 10**3, subunit="kpc", m=1)
+Mpc = Unit(3.085677581 * 10**16 * 10**6, subunit="Mpc", m=1)
+Gpc = Unit(3.085677581 * 10**16 * 10**9, subunit="Gpc", m=1)
+
 # standard suffixes
 def __add_subunits():
     for i, sx in enumerate('zafpnum kMGTPE'):
