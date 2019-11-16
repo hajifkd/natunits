@@ -63,14 +63,21 @@ class Unit(object):
         else:
             return coeff
 
-    def str_expression(self, mult, power):
+    def coefficient(self):
         coeff = 1.
+        for k in self.units:
+            if k in self.subunits:
+                c, _, m = self.subunits[k]
+                coeff *= c**(self.units[k] / m)
+        
+        return self.coeff / coeff
+
+    def str_expression(self, mult, power):
         res=''
 
         for k in self.units:
             if k in self.subunits:
-                c, rn, m = self.subunits[k]
-                coeff *= c**(self.units[k] / m)
+                _, rn, m = self.subunits[k]
             else:
                 rn = k
                 m = 1
@@ -82,7 +89,7 @@ class Unit(object):
             else:
                 res += '%s %s%s%s' % (mult, rn, power, str(newunit))
 
-        res = '%3.2e%s' % (self.coeff / coeff, res)
+        res = '%3.2e%s' % (self.coefficient(), res)
 
         return res
 
