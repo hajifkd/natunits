@@ -132,18 +132,17 @@ class Unit(object):
         sc, sp = self.to_natural_unit()
         tc, tp = t.to_natural_unit()
 
-        return (sc / tc**(1.0 * sp / tp), Fraction(sp, tp))
+        if tp == 0:
+            if sp == 0:
+                return (sc / tc, 0)
+            else:
+                raise UnitNotMatchError
+        else:
+            return (sc / tc**(1.0 * sp / tp), Fraction(sp, tp))
 
     def in_(self, t):
         c, p = self.convert(t)
         return c * t**p
-
-    def __getattr__(self, name):
-        if name.startswith('in_'):
-            u = getattr(sys.modules[__name__], name[3:])
-            return functools.partial(self.in_, u)
-        else:
-            raise AttributeError
 
     def inverse(self):
         return 1.0 / self
@@ -222,6 +221,7 @@ m = Unit(1, m=1)
 s = Unit(1, s=1)
 kg = Unit(1, kg=1)
 kelvin = Unit(1, kelvin=1)
+coulomb = Unit(1, coulomb=1)
 
 # physical constants
 c = 299792458 * m / s
@@ -229,7 +229,7 @@ hbar = 1.0545718e-34 * m**2 * kg / s
 hbarc = 1.97326979e-16 * m * GeV
 kB = 8.61733034e-14 * GeV / kelvin
 G = 6.67408e-11 * m**3 * kg**-1 * s**-2
-
+e = 1.602176634 * 10**-19 * coulomb
 
 def __generate_unity():
     unity = {}
@@ -243,6 +243,8 @@ def __generate_unity():
     unity['kg'] = (he.coeff, he.units[BASE])
     # kelvin
     unity['kelvin'] = (kB.coeff, kB.units[BASE])
+    # coulomb
+    unity['coulomb'] = (1.0 / e.coeff, 0)
 
     return unity
 
