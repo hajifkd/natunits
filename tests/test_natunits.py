@@ -1,4 +1,4 @@
-from hepunits.prelude import *
+from natunits.prelude import *
 import pytest
 from fractions import Fraction
 

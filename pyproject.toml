@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hepunits"
+name = "natunits"
 version = "0.1.0"
 description = ""
 authors = ["Hajime Fukuda <hajime.fukuda@me.com>"]

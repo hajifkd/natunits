@@ -1,4 +1,4 @@
-# hepunits
+# natunits
 
 A library to handle the natural unit
 
