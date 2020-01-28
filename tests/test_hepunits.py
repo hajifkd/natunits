@@ -58,7 +58,7 @@ def test_conversion():
 # test for str expression
 def test_str():
     assert '1.00e+00 GeV' == str(GeV)
-    assert '3.00e+08 s^-1 m' == str(c)
+    assert '3.00e+08 s^-1 m' == str(c) or '3.00e+08 m s^-1' == str(c)
     assert '1.16e+04 kelvin' == str(eV.in_(kelvin))
     assert '1.60e-19 coulomb' == str(e)
 

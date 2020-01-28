@@ -1,4 +1,4 @@
-from unit import *
+from .unit import *
 
 N = kg * m / s**2
 J = N * m
