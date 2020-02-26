@@ -141,7 +141,7 @@ class Unit(object):
 
         if tp == 0:
             if sp == 0:
-                return (sc / tc, 0)
+                return (sc / tc, 1)
             else:
                 raise UnitNotMatchError
         else:
@@ -150,6 +150,9 @@ class Unit(object):
     def in_(self, t):
         c, p = self.convert(t)
         return c * t**p
+
+    def __rshift__(self, t):
+        return self.in_(t)
 
     def inverse(self):
         return 1.0 / self

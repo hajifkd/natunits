@@ -25,6 +25,7 @@ def test_operations():
 def test_unities():
     unity = 0.197 * GeV * 10**-15 * m
     assert 1 == pytest.approx(unity.in_(GeV), 5e-3)
+    assert 1 == pytest.approx(unity >> GeV, 5e-3)
 
     unity = 2.99 * 10**8 * m / s
     assert 1 == pytest.approx(unity.in_(GeV), 5e-3)
@@ -45,7 +46,9 @@ def test_unities():
 # partially overwrapped with test_unities
 def test_conversion():
     # same (zero) units
-    assert 299792458. == pytest.approx(c.in_(m / s), 1e-5)
+    with pytest.raises(TypeError):
+    	assert 299792458. == pytest.approx(c.in_(m / s), 1e-5)
+    assert 299792458. == pytest.approx(c.in_(m / s).coeff, 1e-5)
 
     # c is dimensionless
     with pytest.raises(UnitNotMatchError):
@@ -65,7 +68,7 @@ def test_str():
 # test for subunits
 def test_subunit():
     assert 1e-3 == pytest.approx(MeV.coeff, 1e-3)
-    assert 0.197 == pytest.approx(hbarc.in_(eV * um), 1e-2)
+    assert 0.197 == pytest.approx(hbarc.in_(eV * um).coefficient(), 1e-2)
     assert '1.00e-01 b^1/2' == str(fm.in_(b))
 
     # Avogadro number
