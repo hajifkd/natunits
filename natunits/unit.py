@@ -263,53 +263,26 @@ Unit.unity = __generate_unity()
 # Planck constant
 Mp = (8 * pi * G).in_(GeV).inverse()**Fraction(1, 2)
 
-# barn
-b = Unit(1e-28, subunit='b', m=2)
-
-# parsec
-pc = Unit(3.085677581 * 10**16, subunit="pc", m=1)
-kpc = Unit(3.085677581 * 10**16 * 10**3, subunit="kpc", m=1)
-Mpc = Unit(3.085677581 * 10**16 * 10**6, subunit="Mpc", m=1)
-Gpc = Unit(3.085677581 * 10**16 * 10**9, subunit="Gpc", m=1)
-
 # standard suffixes
-def __add_subunits():
+def add_subunits(basename, basecoeff, standard_unit, dim=1, suffixes=None, namespace=__name__):
     for i, sx in enumerate('zafpnum kMGTPE'):
+        if suffixes and not sx in suffixes:
+            continue
+
         if sx == ' ':
             sx = ''
 
         base = 10**(-21 + i * 3)
+        name = '%s%s' % (sx, basename)
 
-        if sx:
-            # barn
-            name = '%cb' % sx
-            u = Unit(1e-28 * base, subunit=name, m=2)
-            setattr(sys.modules[__name__], name, u)
+        if dim == 1 and standard_unit == name:
+            continue
 
-        for unit in ('GeV', 'm', 's', 'kg'):
-            if unit == 'GeV':
-                nname = 'eV'
-                basecoeff = 1e-9
-            elif unit == 'kg':
-                nname = 'g'
-                basecoeff = 1e-3
-            else:
-                nname = unit
-                basecoeff = 1.0
+        u = Unit(base * basecoeff, subunit=name, **{standard_unit: dim})
+        setattr(sys.modules[namespace], name, u)
 
-            name = '%s%s' % (sx, nname)
+add_subunits('eV', 1e-9, 'GeV')
+add_subunits('m', 1, 'm')
+add_subunits('g', 1e-3, 'kg')
+add_subunits('s', 1, 's')
 
-            if name == unit:
-                continue
-
-            u = Unit(base * basecoeff, subunit=name, **{unit: 1})
-            setattr(sys.modules[__name__], name, u)
-
-__add_subunits()
-cm = Unit(1e-2, subunit='cm', m=1)
-minute = Unit(60, subunit='minute', s=1)
-hour = Unit(60 * 60, subunit='hour', s=1)
-day = Unit(60 * 60 * 24, subunit='day', s=1)
-year = Unit(60 * 60 * 24 * 365, subunit='year', s=1)
-
-au = Unit(149597870700.0, subunit='au', m=1)
