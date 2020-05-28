@@ -1,5 +1,6 @@
 import functools
 import sys
+import math
 
 from fractions import Fraction
 
@@ -240,6 +241,7 @@ hbarc = 1.97326979e-16 * m * GeV
 kB = 8.61733034e-14 * GeV / kelvin
 G = 6.67408e-11 * m**3 * kg**-1 * s**-2
 e = 1.602176634 * 10**-19 * coulomb
+alpha = 7.2973525693 * 10**-3
 
 def __generate_unity():
     unity = {}
@@ -254,7 +256,8 @@ def __generate_unity():
     # kelvin
     unity['kelvin'] = (kB.coeff, kB.units[BASE])
     # coulomb
-    unity['coulomb'] = (1.0 / e.coeff, 0)
+    em_couple = math.sqrt(4 * pi * alpha)
+    unity['coulomb'] = (em_couple / e.coeff, 0)
 
     return unity
 
