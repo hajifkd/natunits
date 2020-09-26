@@ -38,11 +38,8 @@ def test_unities():
     k_eV = 0.862 * 10**-9 * 10**-4 * GeV
     assert 1 == pytest.approx(kelvin.in_(GeV) / k_eV, 5e-3)
 
-    # Volt
-    assert 1e-9 == pytest.approx(0.303 * V.in_(GeV).coeff, 1e-3)
-
     # electric constant
-    assert 1 == pytest.approx((8.854 * 10**-12 * m**-3 * kg**-1 * s**4 * A**2).in_(GeV), 1e-3)
+    assert 1 == pytest.approx((4 * pi * 8.854 * 10**-12 * m**-3 * kg**-1 * s**4 * A**2).in_(GeV), 1e-3)
 
 
 # test for conversion

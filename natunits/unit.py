@@ -256,8 +256,7 @@ def __generate_unity():
     # kelvin
     unity['kelvin'] = (kB.coeff, kB.units[BASE])
     # coulomb
-    em_couple = math.sqrt(4 * pi * alpha)
-    unity['coulomb'] = (em_couple / e.coeff, 0)
+    unity['coulomb'] = (math.sqrt(alpha) / e.coeff, 0)
 
     return unity
 
