@@ -6,6 +6,20 @@ A library to handle the natural unit
 
 See tests/ directory
 
+## Installation
+
+To install this library, you can use `pipx`. Here are the steps:
+
+```sh
+pipx install natunits
+``` 
+
+Once installed, you can launch the CLI as
+
+```sh
+natunits_cli
+```
+
 
 ## Development
 

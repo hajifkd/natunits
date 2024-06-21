@@ -46,8 +46,8 @@ def test_unities():
 # partially overwrapped with test_unities
 def test_conversion():
     # same (zero) units
-    with pytest.raises(TypeError):
-    	assert 299792458. == pytest.approx(c.in_(m / s), 1e-5)
+    with pytest.raises(UnitNotMatchError):
+        assert 299792458. == pytest.approx(c.in_(m / s), 1e-5)
     assert 299792458. == pytest.approx(c.in_(m / s).coeff, 1e-5)
 
     # c is dimensionless
